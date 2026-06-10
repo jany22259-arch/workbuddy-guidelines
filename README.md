@@ -1,79 +1,90 @@
-# workbuddy-guidelines
+# WorkBuddy Guidelines
 
-> AI coding behavioral guidelines. Inspired by [Andrej Karpathy](https://github.com/karpathy)'s LLM coding philosophy.
+> AI coding behavioral guidelines for LLM agents. Inspired by [Andrej Karpathy](https://github.com/karpathy)'s LLM coding philosophy.
 
-**Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use your judgment.
-
----
-
-## 1. Think Before Coding
-
-**Don't assume. Don't hide confusion. Surface tradeoffs.**
-
-- State assumptions before implementing. If uncertain, ask.
-- If multiple interpretations exist, list them — don't pick one silently.
-- If a simpler approach exists, speak up. Push back when warranted.
-- If stuck, stop. Name what's confusing. Ask.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 ---
 
-## 2. Simplicity First
+## The Problems
 
-**Minimum code that solves the problem. Nothing speculative.**
+As Andrej Karpathy observed, LLM coding agents share common failure patterns:
 
-- No features beyond what was asked.
-- No abstractions for single-use code.
-- No "flexibility" or "configurability" that wasn't requested.
-- No error handling for impossible scenarios.
-- If 200 lines could be 50 — rewrite.
+- **Silent assumptions** — the agent assumes instead of asking, hides confusion, presents no tradeoffs
+- **Over-engineering** — bloated abstractions, dead code left behind, 100-line problems get 1000-line solutions
+- **Side-effect edits** — changes or deletes code it doesn't understand, irrelevant "improvements" creep in
+- **No verification loop** — builds something and calls it done without testing, no measurable success criteria
 
-Ask yourself: *Would a senior engineer call this over-engineered?* If yes, simplify.
-
----
-
-## 3. Surgical Changes
-
-**Touch only what you must. Clean up your own mess only.**
-
-- Don't "improve" adjacent code, comments, or formatting.
-- Don't refactor things that aren't broken.
-- Match existing style, even if you'd do it differently.
-- Dead code that's not yours → mention it, don't delete it.
-- Orphaned imports/variables from YOUR changes → remove.
-
-The test: every changed line should trace back to the user's request.
+These problems compound in **Chinese-language development environments**: encoding issues, Windows path quirks, and tools that don't play well with CJK characters.
 
 ---
 
-## 4. Goal-Driven Execution
+## The Solution
 
-**Define success criteria. Loop until verified.**
+One file with **6 principles** that directly counter each failure pattern:
 
-- "Add validation" → write failing tests first, then implement, all green.
-- "Fix the bug" → reproduce first, fix, confirm no regression.
-- "Refactor" → tests pass before and after.
-
-Multi-step tasks: state a brief plan — `1. [Step] → verify: [check]`
-
----
-
-## 5. Security 🔒
-
-- Passwords, tokens, API keys — **never** hardcode. Use `sk-xxx` placeholders.
-- If you see a credential — redact it. Don't pass it along. Unsure? Treat it as secret.
-- **Never edit original files directly. Backup first: `file.bak.YYYYMMDD`, then edit.**
-- JSON/YAML/TOML — read and understand structure before modifying.
-- Personal directories (Desktop, Downloads, Documents) — confirm before touching.
+| Principle | Counters |
+|-----------|----------|
+| **Think Before Coding** | Silent assumptions, hidden confusion, missing tradeoffs |
+| **Simplicity First** | Over-engineering, bloated abstractions, dead code |
+| **Surgical Changes** | Irrelevant edits, touching code that isn't yours |
+| **Goal-Driven Execution** | No verification, "done" without testing |
+| **Security** | Credential leaks, irreversible file operations |
+| **Delivery** | Encoding chaos, non-standard output, repeated mistakes |
 
 ---
 
-## 6. Delivery
+## Files
 
-- Documents default to Markdown, encoding UTF-8.
-- Web pages → single-file HTML, no external dependencies, mobile-first.
-- Chinese environment: use `/` for paths, avoid GBK encoding issues. Use Python instead of PowerShell for Chinese text processing.
-- Lessons learned → document them. Don't repeat mistakes.
+| File | Language | Purpose |
+|------|----------|---------|
+| [`GUIDELINES.md`](./GUIDELINES.md) | EN | The 6 rules — copy into your agent's system prompt |
+| [`GUIDELINES.zh.md`](./GUIDELINES.zh.md) | 中文 | Same rules, native Chinese — copy into your agent's system prompt |
 
 ---
 
-**These guidelines are working if:** diffs are clean, no rework from over-engineering, and questions come before mistakes.
+## Install
+
+### For WorkBuddy
+
+Copy the guidelines into your Codex custom instructions:
+
+```
+1. Open WorkBuddy → Codex → Custom Instructions
+2. Paste the content of GUIDELINES.md or GUIDELINES.zh.md
+3. Done.
+```
+
+### For Other Agents (Claude, Cursor, Copilot, etc.)
+
+Same thing — paste the guidelines into whatever "system prompt" or "rules" mechanism your tool provides.
+
+---
+
+## Key Insight
+
+> *"LLMs are remarkably good at looping until a specific goal is met... Don't tell it what to do. Give it success criteria and let it run."*
+> — Andrej Karpathy
+
+This is the foundation of Principle 4 (Goal-Driven Execution). The agent doesn't need step-by-step instructions — it needs a clear, verifiable finish line.
+
+---
+
+## How to Know It's Working
+
+- Diffs are minimal — only the lines that matter changed
+- No rewrites from over-engineering
+- Clarifying questions come **before** implementation
+- PRs are clean, focused, easy to review
+
+---
+
+## Tradeoff Note
+
+These guidelines bias toward **caution over speed**. For trivial tasks (spelling fixes, obvious one-liners), use your judgment and skip the full workflow. The goal is fewer costly mistakes on non-trivial work — not bureaucracy.
+
+---
+
+## License
+
+MIT — see [LICENSE](./LICENSE).
