@@ -34,6 +34,20 @@ One file with **6 principles** that directly counter each failure pattern:
 
 ---
 
+## What We Added
+
+Andrej Karpathy's original guidelines focus on four coding principles. We built on that foundation:
+
+| Addition | Description |
+|----------|-------------|
+| **Principle 5: Security** | No hardcoded credentials, backup-before-edit, confirm before touching personal dirs — from real-world production experience |
+| **Principle 6: Delivery** | Markdown default, UTF-8 encoding, Chinese environment workarounds (`/` for paths, avoid GBK, use Python not PowerShell) |
+| **Native Chinese support** | Full localization, not machine-translated — ready to paste into any Chinese-language agent setup |
+
+TL;DR: The original covers "how to code." We added "how to code safely" and "how to code in Chinese environments."
+
+---
+
 ## Files
 
 | File | Language | Purpose |
@@ -47,12 +61,12 @@ One file with **6 principles** that directly counter each failure pattern:
 
 ### For WorkBuddy
 
-Copy the guidelines into your Codex custom instructions:
+Copy the guidelines into your WorkBuddy custom instructions:
 
 ```
-1. Open WorkBuddy → Codex → Custom Instructions
+1. Open WorkBuddy → click user avatar → Settings → Personalization → Custom Instructions
 2. Paste the content of GUIDELINES.md or GUIDELINES.zh.md
-3. Done.
+3. Save. Done.
 ```
 
 ### For Other Agents (Claude, Cursor, Copilot, etc.)
